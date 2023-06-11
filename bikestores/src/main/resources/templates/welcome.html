@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'welcome')}">
+<body>
+
+<div class="container">
+    <h1>Welcome to Spring boot Bike Store!</h1>
+    <p>click here to navigate to <a th:href="@{categories/}">the category page</a></p>
+</div>
+
+</body>
+</html>
