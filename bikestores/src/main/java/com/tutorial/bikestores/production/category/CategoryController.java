@@ -2,10 +2,7 @@ package com.tutorial.bikestores.production.category;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("categories")
@@ -35,7 +32,8 @@ public class CategoryController {
     }
 
     @PostMapping("new")
-    public String createCategory(){
+    public String createCategory(Category category){
+        categoryService.saveCategory(category);
         return "redirect:/categories/";
     }
 
@@ -46,7 +44,14 @@ public class CategoryController {
     }
 
     @PostMapping("{id}/edit")
-    public String updateCategory(){
+    public String updateCategory(@PathVariable Integer id, Category category){
+        categoryService.saveCategory(category);
+        return "redirect:/categories/";
+    }
+
+    @GetMapping("{id}/delete")
+    public String deleteCategory(@PathVariable Integer id){
+        categoryService.deleteCategoryById(id);
         return "redirect:/categories/";
     }
 }

@@ -6,15 +6,31 @@
 
     <h1>Categories</h1>
 
+    <a th:href="@{/categories/new}" class="btn btn-success"><i class="fas fa-plus"></i> Add new</a>
     <table class="table table-striped">
         <thead>
         <tr>
             <th>Name</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="category : ${categories}">
             <td th:text="${category.name}"></td>
+            <td>
+                <a th:href="@{/categories/{categoryId} (categoryId=${category.id})}"
+                   class="btn btn-primary">
+                    <i class="fas fa-eye"></i>
+                </a>
+                <a th:href="@{/categories/{categoryId}/edit (categoryId=${category.id})}"
+                   type="button" class="btn btn-success">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a th:href="@{/categories/{categoryId}/delete (categoryId=${category.id})}"
+                   type="button" class="btn btn-danger">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </td>
         </tr>
         </tbody>
         <tfoot>

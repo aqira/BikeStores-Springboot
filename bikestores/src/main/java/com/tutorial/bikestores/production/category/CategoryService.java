@@ -12,11 +12,13 @@ public class CategoryService {
 
     private static final Map<Integer, Category> categories = new HashMap<>();
 
-    static{
+    static {
         categories.put(1, new Category(1, "Mountain bike"));
         categories.put(2, new Category(2, "Street bike"));
         categories.put(3, new Category(3, "City bike"));
     }
+
+    private static int counter = categories.size();
 
     public List<Category> getAllCategories() {
         return new ArrayList<>(categories.values());
@@ -27,6 +29,7 @@ public class CategoryService {
     }
 
     public void saveCategory(Category category) {
+        if (category.getId() == null) category.setId(++counter);
         categories.put(category.getId(), category);
     }
 
