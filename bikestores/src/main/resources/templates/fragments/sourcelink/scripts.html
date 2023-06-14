@@ -1,0 +1,21 @@
+<!--Bootstrap JS-->
+<script th:src="@{/resources/bootstrap/js/bootstrap.min.js}"></script>
+<!--Template Font Awesomes-->
+<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+<!--Template Core-->
+<script th:src="@{/resources/lib/assets/js/core/popper.min.js}"></script>
+<script th:src="@{/resources/lib/assets/js/core/bootstrap.min.js}"></script>
+
+<!--Template Theme JS-->
+<script th:src="@{/resources/lib/assets/js/soft-ui-dashboard.min.js}"></script>
+
+<script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+
+</script>

@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org" th:fragment="layout (template, menu)">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/images/favicon.png}">
-
-    <title>Bike Stores :: Springboot Tutorial Demo</title>
-    <link rel="stylesheet" th:href="@{/resources/lib/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/resources/lib/fa/css/all.min.css}">
-    <link rel="stylesheet" th:href="@{/resources/css/style.css}">
-
+    <th:block th:replace="~{fragments/sourcelink/head-metadata}"/>
 </head>
-<body>
-<th:block th:insert="${template}"/>
+<body class="g-sidenav-show  bg-gray-100">
 
-<script th:src="@{/resources/bootstrap/js/bootstrap.min.js}"></script>
 
+<aside th:replace="~{fragments/navigations :: sidebar}"></aside>
+
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <nav th:replace="~{fragments/navigations :: navbar(${menu})}"></nav>
+
+    <th:block th:insert="${template}"/>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+</main>
+
+<th:block th:replace="~{fragments/sourcelink/scripts}"/>
 </body>
 
 </html>
