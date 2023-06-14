@@ -3,55 +3,59 @@ package com.tutorial.bikestores.production.category;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("categories")
 public class CategoryController {
 
-    private final CategoryService categoryService;
+    private final CategoryService service;
 
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
+    public CategoryController(CategoryService service) {
+        this.service = service;
+    }
+
+    @ModelAttribute("category")
+    public Category findCategory(@PathVariable(required = false) Integer categoryId){
+        return categoryId == null? new Category() : service.getCategoryById(categoryId);
     }
 
     @GetMapping("/")
-    public String showListOfCategories(Model model){
-        model.addAttribute("categories", categoryService.getAllCategories());
-        return "categories/categories-list";
+    public ModelAndView showListOfCategories(Model model){
+        ModelAndView modelAndView = new ModelAndView("categories/categories-list");
+        modelAndView.addObject("categories", service.getAllCategories());
+        return modelAndView;
     }
 
-    @GetMapping("{id}")
-    public String findCategory(@PathVariable Integer id, Model model){
-        model.addAttribute("category", categoryService.getCategoryById(id));
+    @GetMapping("{categoryId}")
+    public String findCategory(){
         return "categories/category-details";
     }
     @GetMapping("new")
-    public String initCategoryCreationalForm(Model model){
-        model.addAttribute("category", new Category());
-        return "categories/insert-category";
+    public String initCategoryCreationalForm(){
+        return "categories/upsert-category";
     }
 
     @PostMapping("new")
     public String createCategory(Category category){
-        categoryService.saveCategory(category);
+        service.saveCategory(category);
         return "redirect:/categories/";
     }
 
-    @GetMapping("{id}/edit")
-    public String initCategoryUpdateForm(@PathVariable Integer id, Model model){
-        model.addAttribute("category", categoryService.getCategoryById(id));
-        return "categories/update-category";
+    @GetMapping("{categoryId}/edit")
+    public String initCategoryUpdateForm(){
+        return "categories/upsert-category";
     }
 
-    @PostMapping("{id}/edit")
-    public String updateCategory(@PathVariable Integer id, Category category){
-        categoryService.saveCategory(category);
+    @PostMapping("{categoryId}/edit")
+    public String updateCategory(Category category){
+        service.saveCategory(category);
         return "redirect:/categories/";
     }
 
-    @GetMapping("{id}/delete")
-    public String deleteCategory(@PathVariable Integer id){
-        categoryService.deleteCategoryById(id);
+    @GetMapping("{categoryId}/delete")
+    public String deleteCategory(@PathVariable Integer categoryId){
+        service.deleteCategoryById(categoryId);
         return "redirect:/categories/";
     }
 }

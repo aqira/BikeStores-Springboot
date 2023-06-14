@@ -18,6 +18,7 @@ public class CategoryService {
         categories.put(3, new Category(3, "City bike"));
     }
 
+
     private static int counter = categories.size();
 
     public List<Category> getAllCategories() {

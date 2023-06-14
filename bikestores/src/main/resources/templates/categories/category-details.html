@@ -2,10 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
       th:replace="~{fragments/layout :: layout (~{::body},'categories')}">
 <body>
-
-<div class="container">
-
-    <h1>Categories / Details</h1>
+    <h1>Category</h1>
 
     <div class="row">
         <div class="col" th:object="${category}">
@@ -15,9 +12,5 @@
             <p>Name : <strong th:text="*{name}"></strong></p>
         </div>
     </div>
-
-</div>
-
-
 </body>
 </html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'products')}">
+<body>
+<div class="row">
+    <div class="col" th:object="${product}">
+
+        <h2>Category <strong th:text="*{id}"></strong></h2>
+        <hr>
+        <p>Name : <strong th:text="*{name}"></strong></p>
+        <p>Category : <strong th:text="*{category.name}"></strong></p>
+        <p>Year Model : <strong th:text="*{modelYear}"></strong></p>
+        <p>Price : <strong th:text="*{listPrice}"></strong></p>
+    </div>
+</div>
+</body>
+</html>

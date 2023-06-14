@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'products')}">
+<body>
+<h1>Product</h1>
+
+<div class="row">
+    <form method="post" th:object="${product}">
+        <div>
+            <label for="name">Name:</label>
+            <input th:field="*{name}" id="name" type="text">
+        </div>
+        <div>
+            <label for="category">Category:</label>
+            <select id="category" th:field="*{categoryId}" required>
+                <option value="">Select Category</option>
+                <option th:each="category : ${categories}"
+                        th:value="${category.id}"
+                        th:text="${category.name}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="modelYear">Model Year:</label>
+            <input th:field="*{modelYear}" id="modelYear" type="text">
+        </div>
+        <div>
+            <label for="listPrice">Price:</label>
+            <input th:field="*{listPrice}" id="listPrice" type="text">
+        </div>
+        <hr>
+        <button th:text="${product.id} == null? 'Add New Product':'Edit Product'"></button>
+    </form>
+</div>
+</body>
+</html>
