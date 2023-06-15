@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout (~{::body},'categories')}">
+      th:replace="~{fragments/layout :: layout(~{::body}, 'Category', 'Category Details')}">
 <body>
-    <h1>Category</h1>
-
-    <div class="row">
-        <div class="col" th:object="${category}">
-
-            <h2>Category <strong th:text="*{id}"></strong></h2>
-            <hr>
-            <p>Name : <strong th:text="*{name}"></strong></p>
-        </div>
+<div class="container">
+    <div class="details" th:object="${category}">
+        <p>Category <span th:text="*{id}"></span></p>
+        <hr>
+        <p>Name : <span th:text="*{name}"></span></p>
     </div>
+</div>
 </body>
 </html>

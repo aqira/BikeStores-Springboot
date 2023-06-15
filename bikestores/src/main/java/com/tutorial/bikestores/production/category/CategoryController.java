@@ -1,61 +1,75 @@
 package com.tutorial.bikestores.production.category;
 
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("categories")
 public class CategoryController {
 
     private final CategoryService service;
 
-    public CategoryController(CategoryService service) {
+    public CategoryController(@Qualifier("dbCategoryService") CategoryService service) {
         this.service = service;
     }
 
     @ModelAttribute("category")
-    public Category findCategory(@PathVariable(required = false) Integer categoryId){
-        return categoryId == null? new Category() : service.getCategoryById(categoryId);
+    public Category findCategory(@PathVariable(required = false) Integer id){
+        return id == null? new Category() : service.getCategoryById(id);
     }
-
-    @GetMapping("/")
-    public ModelAndView showListOfCategories(Model model){
-        ModelAndView modelAndView = new ModelAndView("categories/categories-list");
+    @GetMapping("/categories")
+    public ModelAndView showAllCategories(){
+        ModelAndView modelAndView = new ModelAndView("/categories/categories-index");
         modelAndView.addObject("categories", service.getAllCategories());
         return modelAndView;
     }
-
-    @GetMapping("{categoryId}")
-    public String findCategory(){
-        return "categories/category-details";
-    }
-    @GetMapping("new")
-    public String initCategoryCreationalForm(){
-        return "categories/upsert-category";
+    @GetMapping("/categories/{id}")
+    public ModelAndView showCategory(){
+        ModelAndView modelAndView = new ModelAndView("/categories/category-details");
+        return modelAndView;
     }
 
-    @PostMapping("new")
-    public String createCategory(Category category){
+    @GetMapping("/categories/new")
+    public ModelAndView initCreationCategory(){
+        ModelAndView modelAndView = new ModelAndView("/categories/upsert-category");
+        return modelAndView;
+    }
+
+    @PostMapping("/categories/new")
+    public String newCategoryCreation(@Valid Category category, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "categories/upsert-category";
+        }
         service.saveCategory(category);
-        return "redirect:/categories/";
+        return "redirect:/categories";
     }
 
-    @GetMapping("{categoryId}/edit")
-    public String initCategoryUpdateForm(){
-        return "categories/upsert-category";
+    @GetMapping("/categories/{id}/edit")
+    public ModelAndView initEditCategory(){
+        ModelAndView modelAndView = new ModelAndView("/categories/upsert-category");
+        return modelAndView;
     }
 
-    @PostMapping("{categoryId}/edit")
-    public String updateCategory(Category category){
+    @PostMapping("/categories/{id}/edit")
+    public String editCategory(@Valid Category category, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "categories/upsert-category";
+        }
         service.saveCategory(category);
-        return "redirect:/categories/";
+        return "redirect:/categories";
     }
 
-    @GetMapping("{categoryId}/delete")
-    public String deleteCategory(@PathVariable Integer categoryId){
-        service.deleteCategoryById(categoryId);
-        return "redirect:/categories/";
+    @GetMapping("/categories/{id}/remove")
+    public String removeCategory(@PathVariable Integer id){
+        service.deleteCategoryById(id);
+        return "redirect:/categories";
     }
+
 }

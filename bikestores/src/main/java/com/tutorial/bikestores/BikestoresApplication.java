@@ -10,7 +10,6 @@ public class BikestoresApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(BikestoresApplication.class, args);
-		((ProductService)context.getBean("productService")).exampleProductData();
 
 	}
 
